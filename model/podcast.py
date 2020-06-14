@@ -3,7 +3,7 @@ import pandas as pd
 
 from service.asyncio_scrapper_description import scrap_descriptions
 from service.asyncio_scrapper_metadata import scrap_all_metadata
-from service.s3 import get_s3_content, get_s3_session
+from service.s3 import get_s3_mp3, get_s3_session
 from service.download_mp3 import download_podcasts
 from service.create_rss import create_rss_feed
 from service.scraper_picture import set_podcast_picture
@@ -34,7 +34,7 @@ class Podcast:
 
     def download_mp3_to_s3(self):
 
-        df_s3 = get_s3_content(self)
+        df_s3 = get_s3_mp3(self)
 
         self.df_url_to_dl = self.df_podcasts[
             ~(self.df_podcasts["data-asset-source"].isnull())
@@ -51,7 +51,7 @@ class Podcast:
             self.podcast_pic_url = None
 
     def create_rss_feed(self):
-        df_s3_after_dl = get_s3_content(self)
+        df_s3_after_dl = get_s3_mp3(self)
 
         self.df_for_rss = self.df_podcasts[
             self.df_podcasts["data-media-id"].isin(
