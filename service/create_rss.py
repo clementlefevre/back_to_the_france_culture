@@ -6,6 +6,7 @@ import datetime
 
 def create_rss_object(all_titles_with_s3, pod):
     items_list = []
+
     for title in all_titles_with_s3:
         id = title["data-media-id"]
         guid = f"https://{pod.bucket_name}.s3.amazonaws.com/{id}.mp3"
@@ -26,7 +27,9 @@ def create_rss_object(all_titles_with_s3, pod):
     feed = Feed(
         title=pod.podcast,
         link="https://www.franceculture.fr/emissions/" + pod.podcast,
-        image=Image(pod.podcast_pic_url, pod.podcast, pod.podcast_url),
+        image=Image(pod.podcast_pic_url, pod.podcast, pod.podcast_url)
+        if pod.podcast_pic_url is not None
+        else None,
         description=pod.podcast,
         language="en-US",
         lastBuildDate=datetime.datetime.now(),

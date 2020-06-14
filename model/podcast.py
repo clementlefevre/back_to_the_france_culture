@@ -26,7 +26,6 @@ class Podcast:
     def retrieve_infos(self):
 
         df_metadata = scrap_all_metadata(self)
-        print(df_metadata)
         df_descriptions = scrap_descriptions(df_metadata)
         self.df_podcasts = pd.merge(
             df_metadata, df_descriptions, on="data-media-id"
@@ -45,10 +44,11 @@ class Podcast:
         download_podcasts(self)
 
     def set_picture(self):
-        set_podcast_picture(self)
-        self.podcast_pic_url = (
-            f"https://{self.bucket_name}.s3.amazonaws.com/{self.pic_filename}"
-        )
+        try:
+            set_podcast_picture(self)
+            self.podcast_pic_url = f"https://{self.bucket_name}.s3.amazonaws.com/{self.pic_filename}"
+        except Exception:
+            self.podcast_pic_url = None
 
     def create_rss_feed(self):
         df_s3_after_dl = get_s3_content(self)
