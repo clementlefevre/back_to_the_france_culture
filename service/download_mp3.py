@@ -31,19 +31,23 @@ class DownloadThread(threading.Thread):
         name = title["data-media-id"] + ".mp3"
         file_url = title["data-asset-source"]
         dest = os.path.join(self.destfolder, name)
-        # print ("[%s] Downloading %s -> %s"%(self.ident,file_url, dest))
-        r = requests.get(file_url, stream=True)
-        if r.status_code == 200:
-            with open(dest, "wb") as f:
-                r.raw.decode_content = True
-                shutil.copyfileobj(r.raw, f)
-            # upload cleaned df to s3
-            # print(f'uploading {name} to S3 bucket {bucket_name}')
-            # s3.Bucket(bucket_name).put_object(Key=name, Body=data)
-            self.s3.meta.client.upload_file(
-                dest, bucket_name, name, ExtraArgs={"ACL": "public-read"}
-            )
-            os.remove(dest)
+
+        try:
+            # print ("[%s] Downloading %s -> %s"%(self.ident,file_url, dest))
+            r = requests.get(file_url, stream=True)
+            if r.status_code == 200:
+                with open(dest, "wb") as f:
+                    r.raw.decode_content = True
+                    shutil.copyfileobj(r.raw, f)
+                # upload cleaned df to s3
+                # print(f'uploading {name} to S3 bucket {bucket_name}')
+                # s3.Bucket(bucket_name).put_object(Key=name, Body=data)
+                self.s3.meta.client.upload_file(
+                    dest, bucket_name, name, ExtraArgs={"ACL": "public-read"}
+                )
+                os.remove(dest)
+        except Exception as e:
+            print(e)
 
 
 def download(s3, df_url, destfolder, numthreads=10):
