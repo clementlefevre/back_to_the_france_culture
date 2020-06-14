@@ -26,6 +26,7 @@ class Podcast:
     def retrieve_infos(self):
 
         df_metadata = scrap_all_metadata(self)
+        df_metadata = df_metadata[~df_metadata["data-media-id"].isnull()]
         df_descriptions = scrap_descriptions(df_metadata)
         self.df_podcasts = pd.merge(
             df_metadata, df_descriptions, on="data-media-id"
