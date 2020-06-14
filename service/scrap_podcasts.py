@@ -4,7 +4,7 @@ from lxml import etree
 from config import ROOT_URL
 
 
-def get_rss_official_link(pod):
+def get_all_podcasts_links(pod):
 
     r = requests.get(ROOT_URL.format("", ""))
     main_page = etree.HTML(r.content)
