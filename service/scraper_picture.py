@@ -35,7 +35,7 @@ def set_podcast_picture(pod):
     img = Image.open(pod.pic_filename)
     draw = ImageDraw.Draw(img)
     #font = ImageFont.truetype("/usr/share/fonts/truetype/humor-sans/Humor-Sans.ttf", 150)
-    font = ImageFont.truetype("Arial.ttf", 100)
+    font = ImageFont.truetype("arial.ttf", 100)
     draw.text((70, 20), 'Archives', fill='#ff0081', font=font)
     img.save(pod.pic_filename)
     pod.s3.meta.client.upload_file(
