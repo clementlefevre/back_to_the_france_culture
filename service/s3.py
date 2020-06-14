@@ -50,7 +50,7 @@ def get_s3_rss(pod):
 
     df_rss = df_s3[df_s3.key.str.contains(".rss")]
     df_rss["link"] = (
-        "https://podcastsclement1.s3.amazonaws.com/" + df_rss["key"]
+        f"https://{pod.bucket_name}.s3.amazonaws.com/" + df_rss["key"]
     )
 
     return df_rss
