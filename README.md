@@ -1,4 +1,4 @@
-# Store France Culture progrqms on AWS S3 and create RSS feed
+# Store France Culture programs on AWS S3 and create RSS feed
 
 - set the `config.py` according to the `config_template.py` with your own S3 credentials and bucket name.
 - check the example in the jupyter notebook, to set the program's name, check the url, e.g for *Les Chemins de la Philosophie*, the url is *https://www.franceculture.fr/emissions/les-chemins-de-la-philosophie*, thus the program name is *les-chemins-de-la-philosophie*
