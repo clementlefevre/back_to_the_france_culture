@@ -12,7 +12,7 @@ from config import bucket_name, ROOT_URL, range_url
 
 
 class Podcast:
-    def __init__(self, name):
+    def __init__(self, name, range_url=range_url):
 
         self.podcast = name
         self.podcast_url = ROOT_URL.format(name, "")
